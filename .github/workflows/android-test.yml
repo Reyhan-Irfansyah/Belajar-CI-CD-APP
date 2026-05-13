@@ -6,7 +6,7 @@ on:
 
 jobs:
   test:
-    # UBAH UTAMA: Kita pakai mesin Ubuntu (Linux) yang super cepat dan anti-antre!
+    # Menggunakan mesin Ubuntu (Linux) yang super cepat dan anti-antre!
     runs-on: ubuntu-latest 
 
     steps:
@@ -40,3 +40,14 @@ jobs:
           profile: Nexus 6
           disable-animations: true # Mematikan animasi agar emulator Linux berjalan lebih ngebut
           script: npm run wdio
+
+      - name: Generate Allure Report
+        if: always()
+        run: npx allure generate allure-results --clean -o allure-report
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-report
