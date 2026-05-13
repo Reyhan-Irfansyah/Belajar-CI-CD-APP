@@ -60,7 +60,7 @@ export const config = {
     capabilities: [{
         platformName: 'Android',
         'appium:automationName': 'UiAutomator2',
-        'appium:app': 'E:\\Belajar cypress 2026\\Android.SauceLabs.Mobile.Sample.app.2.7.1.apk',
+        'appium:app': process.cwd() + '/app/Android.SauceLabs.Mobile.Sample.app.2.7.1.apk',
         'appium:appWaitActivity': 'com.swaglabsmobileapp.MainActivity'
     }],
 
