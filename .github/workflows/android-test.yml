@@ -1,0 +1,36 @@
+name: Android E2E Appium Tests
+
+# Tes akan otomatis berjalan setiap kali ada kode baru yang di-push ke branch main
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    # Kita menggunakan macOS karena server Mac di GitHub memiliki akselerasi hardware untuk Emulator Android
+    runs-on: macos-latest 
+
+    steps:
+      # 1. Mengambil kodemu dari GitHub
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Menyiapkan Javascript (Node.js)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 3. Mengunduh semua paket WebdriverIO dan Appium
+      - name: Install Dependencies
+        run: npm install
+
+      # 4. Menciptakan HP Virtual (Emulator) dan menjalankan skrip
+      - name: Run Appium Tests on Emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          target: default
+          arch: x86_64
+          profile: Nexus 6
+          script: npm run wdio # Perintah yang sama seperti di laptopmu!
