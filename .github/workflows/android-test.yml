@@ -1,31 +1,33 @@
 name: Android E2E Appium Tests
 
-# Tes akan otomatis berjalan setiap kali ada kode baru yang di-push ke branch main
 on:
   push:
     branches: [ "main" ]
 
 jobs:
   test:
-    # Kita menggunakan macOS karena server Mac di GitHub memiliki akselerasi hardware untuk Emulator Android
-    runs-on: macos-13
+    # UBAH UTAMA: Kita pakai mesin Ubuntu (Linux) yang super cepat dan anti-antre!
+    runs-on: ubuntu-latest 
 
     steps:
-      # 1. Mengambil kodemu dari GitHub
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 2. Menyiapkan Javascript (Node.js)
+      # (Opsional tapi penting untuk Linux) Memastikan Akselerasi Hardware/KVM menyala
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # 3. Mengunduh semua paket WebdriverIO dan Appium
       - name: Install Dependencies
         run: npm install
 
-      # 4. Menciptakan HP Virtual (Emulator) dan menjalankan skrip
       - name: Run Appium Tests on Emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -33,4 +35,5 @@ jobs:
           target: default
           arch: x86_64
           profile: Nexus 6
-          script: npm run wdio # Perintah yang sama seperti di laptopmu!
+          disable-animations: true # Mematikan animasi agar emulator Linux berjalan lebih ngebut
+          script: npm run wdio
