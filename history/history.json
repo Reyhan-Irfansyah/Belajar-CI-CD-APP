@@ -1,0 +1,1 @@
+{"c40aa4994e8b7b8f25bc43badde003ae":{"statistic":{"failed":0,"broken":1,"skipped":0,"passed":0,"unknown":0,"total":1},"items":[{"uid":"27083aaf170cf96","status":"broken","statusDetails":"Error: element (\"//*[@text=\"Sauce Labs Onesie\"]\") still not displayed after 5000ms","time":{"start":1778653933535,"stop":1778653975661,"duration":42126}}]}}
