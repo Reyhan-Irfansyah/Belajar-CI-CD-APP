@@ -8,7 +8,7 @@ on:
 jobs:
   test:
     # Kita menggunakan macOS karena server Mac di GitHub memiliki akselerasi hardware untuk Emulator Android
-    runs-on: macos-latest 
+    runs-on: macos-13
 
     steps:
       # 1. Mengambil kodemu dari GitHub
